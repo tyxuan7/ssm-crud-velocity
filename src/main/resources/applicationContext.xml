@@ -37,7 +37,11 @@
 		<!-- 扫描所有dao接口的实现，加入到ioc容器中 -->
 		<property name="basePackage" value="com.atguigu.crud.dao"></property>
 	</bean>
-
+	<!-- 配置一个可以批量的sqlSession -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="SqlSessionFactory"></constructor-arg>
+		<constructor-arg name="executorType" value="BATCH"></constructor-arg>
+	</bean>
 	<!--===================== 事物整合===================== -->
 	<!-- 事物控制 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

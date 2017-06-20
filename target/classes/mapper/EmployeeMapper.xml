@@ -97,8 +97,10 @@
       distinct
     </if>
     <include refid="WithDept_Column_List" />
-    form tbl_emp e
-    left join tbl_dept d on e.'d_id'=d.'dept_id'
+    
+    
+    FROM tpl_emp e  
+    left join tpl_dept d on e.`d_id`=d.`dept_id`     
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -109,9 +111,13 @@
   <select id="selectByPrimaryKeyWithDept" resultMap="WithDeptResultMap">
   	select 
     <include refid="WithDept_Column_List" />
-    form tbl_emp e
-    left join tbl_dept d on e.'d_id'=d.'dept_id'
-    where emp_id = #{empId,jdbcType=INTEGER}
+   
+    
+    FROM tpl_emp e  
+    left join tpl_dept d on e.`d_id`=d.`dept_id`
+    where emp_id = #{empId,jdbcType=INTEGER} 
+    
+   
   </select>
   <!-- 查询员工时不带部门信息 -->
   <select id="selectByExample" parameterType="com.atguigu.crud.bean.EmployeeExample" resultMap="BaseResultMap">

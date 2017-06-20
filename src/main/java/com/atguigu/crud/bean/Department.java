@@ -4,8 +4,21 @@ public class Department {
     private Integer deptId;
 
     private String deptName;
+    
+    
 
-    public Integer getDeptId() {
+    public Department() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Department(Integer deptId, String deptName) {
+		super();
+		this.deptId = deptId;
+		this.deptName = deptName;
+	}
+
+	public Integer getDeptId() {
         return deptId;
     }
 

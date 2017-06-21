@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,44 +38,66 @@
 						<th>depiName</th>
 						<th>操作</th>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>q</td>
-						<td>男</td>
-						<td>qq@163.com</td>
-						<td>depiName</td>
-						<td>
-							<button class="btn btn-primary btn-sm">编辑</button>
-							<button class="btn btn-danger btn-sm">删除</button>
-						</td>
-					</tr>
+					<c:forEach items="${pageInfo.list }" var="emp">
+						<tr>
+							<td>${emp.empId }</td>
+							<td>${emp.empName }</td>
+							<td>${emp.gender == "M" ? "男" : "女"}</td>
+							<td>${emp.email }</td>
+							<td>${emp.department.deptName }</td>
+							<td>
+								<button class="btn btn-primary btn-sm">编辑</button>
+								<button class="btn btn-danger btn-sm">删除</button>
+							</td>
+						</tr>
+					</c:forEach>
+					
 				</table>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				当前记录数:xxx
+				当前${pageInfo.pageNum }页,总${pageInfo.pages }页,总${pageInfo.total }条记录
 			</div>
 			<div class="col-md-6">
 				<nav aria-label="Page navigation">
 					  <ul class="pagination">
-					  	<li><a href="#">首页</a></li>
-					    <li>
-					      <a href="#" aria-label="Previous">
-					        <span aria-hidden="true">&laquo;</span>
-					      </a>
-					    </li>
-					    <li><a href="#">1</a></li>
-					    <li><a href="#">2</a></li>
-					    <li><a href="#">3</a></li>
-					    <li><a href="#">4</a></li>
-					    <li><a href="#">5</a></li>
-					    <li>
-					      <a href="#" aria-label="Next">
-					        <span aria-hidden="true">&raquo;</span>
-					      </a>
-					    </li>
-					    <li><a href="#">末页</a></li>
+					  	<c:if test="${pageInfo.pageNum == 1 }">
+					  		<li class="disabled"><a href="${APP_PATH}/emps?pn=1">首页</a></li>
+					  	</c:if>
+					  	<c:if test="${pageInfo.pageNum != 1 }">
+					  		<li ><a href="${APP_PATH}/emps?pn=1">首页</a></li>
+					  	</c:if>
+					  	<c:if test="${pageInfo.hasPreviousPage }">
+						  	<li>
+						      <a href="${APP_PATH}/emps?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+					  	</c:if>					  						   
+					    <c:forEach items="${pageInfo.navigatepageNums }" var="page_num">
+					    	<c:if test="${page_num == pageInfo.pageNum}">
+					    		<li class="active"><a href="#">${page_num }</a></li>	
+					    	</c:if>
+					    	<c:if test="${page_num != pageInfo.pageNum}">
+					    		<li ><a href="${APP_PATH}/emps?pn=${page_num }">${page_num }</a></li>
+					    	</c:if>				    
+					    </c:forEach>
+					    <c:if test="${pageInfo.hasNextPage }">
+					    	 <li>
+							      <a href="${APP_PATH}/emps?pn=${pageInfo.pageNum+1}" aria-label="Next">
+							        <span aria-hidden="true">&raquo;</span>
+							      </a>
+					    	</li>
+					    </c:if>
+					   
+					   	<c:if test="${pageInfo.isLastPage ==true }">
+					   		 <li class="disabled"><a href="${APP_PATH}/emps?pn=${pageInfo.pages}">末页</a></li>
+					   	</c:if>
+					   	<c:if test="${pageInfo.isLastPage ==false }">
+					   		<li ><a href="${APP_PATH}/emps?pn=${pageInfo.pages}">末页</a></li>
+					   	</c:if>
+					    
 					  </ul>
 				</nav>
 			</div>

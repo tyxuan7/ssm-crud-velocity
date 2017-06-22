@@ -10,9 +10,10 @@
 <%
 	pageContext.setAttribute("APP_PATH",request.getContextPath());
 %>
+<script type="text/javascript" src="${APP_PATH}/static/js/jquery.js"></script>
 <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.css">
 <script type="text/javascript" src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${APP_PATH}/static/js/jquery-1.8.3.min.js"></script>
+
 </head>
 <body>
 	<div class="container">

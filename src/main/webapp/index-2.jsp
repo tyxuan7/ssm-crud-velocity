@@ -6,9 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<script type="text/javascript" src="static/js/jquery.js"></script>
 <link type="text/css" href="static/bootstrap-3.3.7-dist/css/bootstrap.css">
 <script type="text/javascript" src="static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="static/js/jquery-1.8.3.min.js"></script>
 </head>
 <body>
 

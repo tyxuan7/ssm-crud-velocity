@@ -1,9 +1,12 @@
 package com.atguigu.crud.controller;
 
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,57 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeservice;
 	
+	
+	/**
+	 * 单个批量删除二合一
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/emp/{ids}",method=RequestMethod.DELETE)
+	public Msg deleteEmpById(@PathVariable("ids") String ids){
+		//批量删除
+		if(ids.contains("-")){
+			List<Integer> del_ids = new ArrayList();
+			String[] str_ids = ids.split("-");
+			//组装id的集合
+			for (String string : str_ids) {
+				del_ids.add(Integer.parseInt(string));
+			}
+			employeeservice.deleteBatch(del_ids);
+		}else{
+			//单个删除
+			Integer id = Integer.parseInt(ids);
+			employeeservice.deleteEmp(id);
+		}
+		
+		return Msg.success();
+	}
+	/**
+	 * 更新员工信息put请求sql报错的原因:
+	 * tomcat:
+	 * 		1.将请求体中的数据，封装有一个map。
+	 * 		2.request.getParameter("empName")就会从这个map中取值。
+	 * 		3.springMVC封装POJO对象的时候,会把POJO中每个属性的值以
+	 * 			request.getParameter("email")形式拿到
+	 * ajax发送put请求引发的问题：
+	 * 				PUT请求，请求体中的数据，request.getParameter("empName")拿不到
+	 * 				TOMCAT一看是PUT不会封装请求体中的数据为map，只有POST形式的请求才会封装请求体为map
+	 * 解决方案：
+	 * web.xml中配置HttpPutFormContentFilter
+	 * 作用：将请求体中的数据解析包装成一个map
+	 * request被重新包装，request.getParemeter()被重写，就会从自己封装的map 中取数据
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/emp/{empId}",method=RequestMethod.PUT)
+	public Msg updateEmp(Employee employee,HttpServletRequest request){
+		System.out.println("请求体重的值:" + request.getParameter("gender"));
+		System.out.println("将要更新的员工数据" + employee);
+		employeeservice.updateEmp(employee);
+		return Msg.success();
+	}
 	/**
 	 * 按照员工Id查询员工
 	 */

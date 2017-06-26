@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.atguigu.crud.bean.Employee;
 import com.atguigu.crud.bean.Msg;
@@ -149,7 +150,7 @@ public class EmployeeController {
 	 * 导入jackson 包处理json数据
 	 * @return
 	 */
-	@RequestMapping("/emps")
+	//@RequestMapping("/emps")
 	@ResponseBody
 	public Msg getEmpsWithJson(@RequestParam(value="pn",defaultValue="1") Integer pn){
 		//这不是一个分页查询
@@ -167,7 +168,7 @@ public class EmployeeController {
 	 * 查询员工数据(分页查询)
 	 *页面转发的形式获取分页数据
 	 */
-	//@RequestMapping("/emps")
+	@RequestMapping("/emps")
 	public String getEmps(@RequestParam(value="pn",defaultValue="1") Integer pn,
 			Model model){
 		
@@ -180,6 +181,10 @@ public class EmployeeController {
 		//使用pageinfo包装查询后的结果，只需要将pageinfo交给页码就行了
 		//封装详细的分页信息，包括我们查询出来的数据,传入连续显示的页数
 		PageInfo page = new PageInfo(emps,5);
+		//ModelAndView mv=new ModelAndView("list");
+		//mv.addObject("emps", emps);
+		//System.out.println(emps);
+		//return mv;
 		model.addAttribute("pageInfo",page);
 		return "list";
 	}

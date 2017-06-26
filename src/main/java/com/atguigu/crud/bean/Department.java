@@ -1,7 +1,8 @@
 package com.atguigu.crud.bean;
 
 public class Department {
-    private Integer deptId;
+   
+	private Integer deptId;
 
     private String deptName;
     
@@ -33,4 +34,10 @@ public class Department {
     public void setDeptName(String deptName) {
         this.deptName = deptName == null ? null : deptName.trim();
     }
+    
+    @Override
+   	public String toString() {
+   		return "Department [deptId=" + deptId + ", deptName=" + deptName + "]";
+   	}
+
 }
